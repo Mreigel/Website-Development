@@ -4,3 +4,4 @@ SQLAlchemy==2.0.30
 Werkzeug==2.3.7
 itsdangerous==2.1.2
 python-dotenv==1.0.1
+gunicorn==21.2.0

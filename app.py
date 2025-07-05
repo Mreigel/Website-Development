@@ -190,34 +190,28 @@ def make_shell_context():
 
 
 # --- Seed if Needed ---
-# --- Seed if Needed ---
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        if not Project.query.first():
-            sample_projects = [
-                {
-                    "name": "E-Commerce Template",
-                    "description": "A modern online store built with Flask.",
-                    "tech_stack": "Flask, SQLite, HTML/CSS",
-                    "image": "project1.jpg",
-                    "github_link": "https://github.com/Mreigel/ecommerce-demo",
-                    "live_demo_link": "#"
-                },
-                {
-                    "name": "Freelancer Portfolio",
-                    "description": "A responsive portfolio website for showcasing personal projects.",
-                    "tech_stack": "HTML, CSS, JS",
-                    "image": "project2.jpg",
-                    "github_link": "https://github.com/Mreigel/portfolio",
-                    "live_demo_link": "#"
-                }
-            ]
-            for p in sample_projects:
-                db.session.add(Project(**p))
-            db.session.commit()
-            print("✅ Sample projects seeded.")
-
-    app.run(debug=True, host='0.0.0.0')  # Only runs locally
-
-application = app
+with app.app_context():
+    db.create_all()
+    if not Project.query.first():
+        sample_projects = [
+            {
+                "name": "E-Commerce Template",
+                "description": "A modern online store built with Flask.",
+                "tech_stack": "Flask, SQLite, HTML/CSS",
+                "image": "project1.jpg",
+                "github_link": "https://github.com/Mreigel/ecommerce-demo",
+                "live_demo_link": "#"
+            },
+            {
+                "name": "Freelancer Portfolio",
+                "description": "A responsive portfolio website for showcasing personal projects.",
+                "tech_stack": "HTML, CSS, JS",
+                "image": "project2.jpg",
+                "github_link": "https://github.com/Mreigel/portfolio",
+                "live_demo_link": "#"
+            }
+        ]
+        for p in sample_projects:
+            db.session.add(Project(**p))
+        db.session.commit()
+        print("✅ Sample projects seeded.")
