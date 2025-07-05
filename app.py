@@ -187,23 +187,9 @@ def make_shell_context():
         'Project': Project,
         'User': User
     }
-#sec
-@app.after_request
-def add_security_headers(response):
-    response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['Referrer-Policy'] = 'no-referrer-when-downgrade'
-    response.headers['Permissions-Policy'] = 'geolocation=(), microphone=()'
-    response.headers['Content-Security-Policy'] = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';"
-    return response
-
-app.config.update(
-    SESSION_COOKIE_SECURE=True,        # Only send cookies over HTTPS
-    SESSION_COOKIE_HTTPONLY=True,      # JS can’t access the cookie
-    SESSION_COOKIE_SAMESITE='Lax'      # CSRF protection
-)
 
 
+# --- Seed if Needed ---
 # --- Seed if Needed ---
 if __name__ == '__main__':
     with app.app_context():
@@ -232,6 +218,6 @@ if __name__ == '__main__':
             db.session.commit()
             print("✅ Sample projects seeded.")
 
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')  # Only runs locally
 
-
+application = app
