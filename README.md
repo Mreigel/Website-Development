@@ -1,18 +1,16 @@
 # Ecommerce-Demo  
 Full-Stack Web App with Docker Support | Built with Flask | Live on AWS
 
-## 📌 About  
-This is a full-stack web application designed as a professional portfolio and demo site for a web development team. It features custom routes, user authentication, resume uploads, and a database-driven project showcase — all built with Python (Flask) and now fully containerized using Docker.
-This project highlights our growing dev team's capability to build and deploy scalable, modern applications.
+## 🧠 Project Overview
+This full-stack web application serves as a professional portfolio and demonstration site for our web development team. Built with Python (Flask) and fully containerized using Docker, it showcases our ability to architect secure, scalable, and modern applications. Key features include custom routing, secure user authentication, resumè file uploads, and a dynamic, database-driven project showcase — all backed by a clean and responsive frontend.
+
 ## 🚀 Live Deployment
-
-The application is live and hosted on **AWS Elastic Beanstalk** via a custom Docker environment and reverse-proxied through **CloudFront** with SSL encryption.
-
-🌐 View Live Site:  
+The application is deployed on AWS Elastic Beanstalk using a custom Docker environment, reverse-proxied through Amazon CloudFront with SSL/TLS encryption via AWS Certificate Manager. Domain routing is managed with Amazon Route 53.
+## 🌐 View Live Site:  
 **https://c2cwebsolutions.com** (Primary domain)  
 Redirects from **.org**, **.net**, and `www.` versions are all configured for instant redirection.
 
-✅ Hosted & Secured Using:  
+## ✅ Hosted & Secured Using:  
 - AWS EC2 via Elastic Beanstalk  
 - Docker container (Amazon Linux 2023)  
 - Flask web server + Gunicorn  
@@ -55,6 +53,16 @@ Redirects from **.org**, **.net**, and `www.` versions are all configured for in
 
 ---
 
+## 🔄 Domain Routing Setup (via AWS)
+
+All purchased domains (`.com`, `.net`, `.org`) are managed through **Route 53**, with S3 static redirect buckets sending `.net` and `.org` traffic (with or without `www`) to the `.com` root.
+
+- **HTTPS** via **ACM** using SAN cert  
+- **Instant redirects** via CloudFront + S3  
+- **No www conflicts** – fully normalized domain routing
+
+---
+
 ## 🧪 Running Locally with Docker (Recommended)
 
 Clone the repository and build the Docker image:
@@ -90,19 +98,11 @@ python app.py
 
 ---
 
-## 🔄 Domain Routing Setup (via AWS)
 
-All purchased domains (`.com`, `.net`, `.org`) are managed through **Route 53**, with S3 static redirect buckets sending `.net` and `.org` traffic (with or without `www`) to the `.com` root.
+## 📢 Closing Notes
 
-- **HTTPS** via **ACM** using SAN cert  
-- **Instant redirects** via CloudFront + S3  
-- **No www conflicts** – fully normalized domain routing
+We've built this from the ground up using AWS-native tools, Docker, and Flask — configuring every routing layer, SSL cert, and deployment strategy manually. This project serves as a launchpad for freelance opportunities, agency contracts, or further production SaaS development.Thank you and please feel free to send us feedback.
 
----
-
-## 📢 Final Notes
-
-We built this from the ground up using AWS-native tools, Docker, and Flask — configuring every routing layer, SSL cert, and deployment strategy manually. This project serves as a launchpad for freelance opportunities, agency contracts, or further production SaaS development.
 
 
 ## 📬 Contact
