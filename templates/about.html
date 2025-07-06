@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- Hero Section -->
-<section class="hero-banner">
+<section class="hero-banner section-block">
   <div class="hero-text">
     <h1>Your Vision. Our Code.</h1>
     <p class="subtext">Secure. Scalable. Built for the modern web.</p>
@@ -11,39 +11,56 @@
 </section>
 
 <!-- Highlighted Values -->
-<section class="about-grid">
-  <div class="info-card">
-    <h3>🔐 Security-Driven Development</h3>
-    <p>Backed by cybersecurity degrees and certifications, we approach every build with a security-first mindset. From form inputs to server deployment, we implement industry best practices at every level — ensuring your site is protected, reliable, and built to last.</p>
-  </div>
+<section class="section-block">
+  <div class="about-grid">
+    <div class="info-card">
+      <h3>🔐 Security-Driven Development</h3>
+      <p>
+        Backed by cybersecurity degrees and certifications, we approach every build with a security-first mindset.
+        From form inputs to server deployment, we implement industry best practices at every level — ensuring your site is protected, reliable, and built to last.
+      </p>
+    </div>
 
-  <div class="info-card">
-    <h3>🛠️ Precision & Professionalism</h3>
-    <p>Our team brings experience from both enterprise IT and academic programs. As veterans and tech professionals, we operate with structure, integrity, and an eye for clean execution. Every detail is accounted for — from code readability to final deployment.</p>
-  </div>
+    <div class="info-card">
+      <h3>🛠️ Precision & Professionalism</h3>
+      <p>
+        Our team brings experience from both enterprise IT and academic programs. As veterans and tech professionals,
+        we operate with structure, integrity, and an eye for clean execution. Every detail is accounted for — from code readability to final deployment.
+      </p>
+    </div>
 
-  <div class="info-card">
-    <h3>⚙️ Built on a Proven Stack</h3>
-    <p>Our primary toolkit includes Python, Flask, HTML/CSS, JavaScript, and AWS — with support for SQL, Docker, and third-party APIs. This allows us to build fast, responsive, and scalable web applications that stay maintainable and upgradeable over time.</p>
-  </div>
+    <div class="info-card">
+      <h3>⚙️ Built on a Proven Stack</h3>
+      <p>
+        Our primary toolkit includes Python, Flask, HTML/CSS, JavaScript, and AWS — with support for SQL, Docker, and third-party APIs.
+        This allows us to build fast, responsive, and scalable web applications that stay maintainable and upgradeable over time.
+      </p>
+    </div>
 
-  <div class="info-card">
-    <h3>🤝 You Come First</h3>
-    <p>Your goals shape the project. We listen, adapt, and collaborate to ensure your brand, your audience, and your features are front and center — not squeezed into a template. We're not just coders — we're your technical partner.</p>
+    <div class="info-card">
+      <h3>🤝 You Come First</h3>
+      <p>
+        Your goals shape the project. We listen, adapt, and collaborate to ensure your brand, your audience, and your features are front and center —
+        not squeezed into a template. We're not just coders — we're your technical partner.
+      </p>
+    </div>
   </div>
 </section>
 
 <!-- Testimonial/Quote -->
-<section class="quote-section">
+<section class="quote-section section-block">
   <blockquote>
-    “When your project demands clean code, real security, and clear communication — we deliver. No fluff, no guesswork.”
+    <p>“When your project demands clean code, real security, and clear communication — we deliver. No fluff, no guesswork.”</p>
   </blockquote>
 </section>
 
 <!-- CTA Box -->
-<section class="cta-box">
+<section class="cta-box section-block">
   <h3>Let’s Build Something That Lasts</h3>
-  <p>We’re ready when you are. Whether it’s your first site or a major overhaul, <a href="{{ url_for('inquiry') }}">reach out here</a> to get started.</p>
+  <p>
+    We’re ready when you are. Whether it’s your first site or a major overhaul,
+    <a href="{{ url_for('inquiry') }}">reach out here</a> to get started.
+  </p>
 </section>
 
 {% endblock %}

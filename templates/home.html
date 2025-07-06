@@ -4,7 +4,7 @@
 {% block head %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
 {% endblock %}
-
+<section class="section-block">
 {% block content %}
 <!-- Swiper Section -->
 <div class="swiper">
@@ -102,9 +102,22 @@
     <div class="swiper-button-next"></div>
   </div>
 </section>
+  <!-- Website Summary Section -->
+<section class="section-block fade-up">
+  <div class="content text-center">
+<h2>What We Do</h2>
+<p style="max-width: 800px; margin: 0 auto; font-size: 1.05rem; color: #ccc;">
+  In today’s world of AI builders and drag-and-drop templates, speed is easy — but quality and security? Not so much.
+  At Coast to Cloud, we offer the best of both worlds: rapid website development that doesn’t sacrifice custom design, clean code, or security. Whether you need something fast or something fully tailored — we build for you, not from a template.
+</p>
+<a href="{{ url_for('inquiry') }}" class="btn btn-blue" style="margin-top: 24px;">Start Your Project</a>
 
-<!-- Swiper Init -->
-<!-- Swiper Init -->
+
+  </div>
+</section>
+
+</section>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const swiper = new Swiper('.team-carousel', {

@@ -6,7 +6,7 @@ from sqlalchemy import or_, func
 import os
 
 app = Flask(__name__)
-app.secret_key = 'your_super_secret_key_here'
+app.secret_key = os.getenv('SECRET_KEY', 'dev')
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'portfolio.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -215,3 +215,9 @@ with app.app_context():
             db.session.add(Project(**p))
         db.session.commit()
         print("✅ Sample projects seeded.")
+
+application = app
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+
