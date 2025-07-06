@@ -100,33 +100,10 @@ All purchased domains (`.com`, `.net`, `.org`) are managed through **Route 53**,
 
 ---
 
-**Michael Reigel**  
-[LinkedIn](#) | [GitHub](https://github.com/Mreigel)
-
-**Joe Lima**  
-[LinkedIn](#) | [GitHub](#)
-
----
-
 ## 📢 Final Notes
 
 We built this from the ground up using AWS-native tools, Docker, and Flask — configuring every routing layer, SSL cert, and deployment strategy manually. This project serves as a launchpad for freelance opportunities, agency contracts, or further production SaaS development.
 
-
-## 🛠️ Running Without Docker
-
-If you prefer a traditional local setup:
-
-    pip install -r requirements.txt
-    python app.py
-
----
-
-## 📁 Branches  
-- `Website` – Main working branch  
-- `WebDev` – Developer branch  
-
----
 
 ## 📬 Contact
 
