@@ -11,3 +11,20 @@
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+app.zip
+
+# Local Python environment
+.venv/
+
+# Secret environment variables
+.env
+
+# Bytecode cache
+__pycache__/
+
+# IDE settings
+.idea/
+
+# Local SQLite databases
+*.db
