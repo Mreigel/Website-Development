@@ -23,3 +23,8 @@ __pycache__/
 
 # Local SQLite databases
 *.db
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

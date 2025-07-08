@@ -4,16 +4,51 @@
 
 {% block content %}
 
+<style>
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .hero-text h1 {
+      font-size: 1.8rem;
+    }
+    .hero-text p {
+      font-size: 1rem;
+      padding: 0 10px;
+    }
+    .cta-box h2 {
+      font-size: 1.5rem;
+    }
+    .cta-box p {
+      padding: 0 10px;
+      font-size: 1rem;
+    }
+  }
+
+  .project-card {
+    background-color: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    color: #f8fafc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .project-card a {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
+</style>
+
 <!-- Hero Section -->
-<section class="hero-banner" style="text-align: center;">
+<section class="hero-banner" style="text-align: center; padding: 60px 20px; background-color: #0f172a; color: #f8fafc;">
   <div class="hero-text">
-    <h1>Projects That Speak for Themselves</h1>
-    <p class="subtext">From concept to deployment — with security, structure, and style.</p>
+    <h1 style="font-size: 2.5rem; margin-bottom: 16px;">Projects That Speak for Themselves</h1>
+    <p class="subtext" style="font-size: 1.2rem;">From concept to deployment — with security, structure, and style.</p>
   </div>
 </section>
 
 <!-- Python & Flask Projects -->
-<section class="projects-section" style="max-width: 960px; margin: 40px auto;">
+<section class="projects-section" style="max-width: 960px; margin: 40px auto; padding: 0 20px;">
   <h2 style="text-align: center; margin-bottom: 20px;">Python & Flask Projects</h2>
   <div class="projects-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
     <div class="project-card">
@@ -31,7 +66,7 @@
 </section>
 
 <!-- JavaScript & React Projects -->
-<section class="projects-section" style="max-width: 960px; margin: 40px auto;">
+<section class="projects-section" style="max-width: 960px; margin: 40px auto; padding: 0 20px;">
   <h2 style="text-align: center; margin-bottom: 20px;">JavaScript & React Projects</h2>
   <div class="projects-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
     <div class="project-card">
@@ -49,10 +84,10 @@
 </section>
 
 <!-- Final CTA with Process -->
-<section class="cta-box" style="text-align: center; padding: 60px 20px;">
-  <h2>Let’s Build Something Together</h2>
-  <p style="max-width: 700px; margin: 20px auto;">
-    Got an idea? Fill out our <a href="{{ url_for('routes.inquiry') }}">inquiry form</a> and we’ll follow up within 1 business day with the exclusion of holidays. If it’s a good fit, we’ll map out the project and get started — with fair pricing and full transparency every step of the way.
+<section class="cta-box" style="text-align: center; padding: 60px 20px; background-color: #1e293b; color: #f8fafc;">
+  <h2 style="margin-bottom: 16px;">Let’s Build Something Together</h2>
+  <p style="max-width: 700px; margin: 0 auto;">
+    Got an idea? Fill out our <a href="{{ url_for('routes.inquiry') }}" style="color: #3b82f6;">inquiry form</a> and we’ll follow up within 1 business day with the exclusion of holidays. If it’s a good fit, we’ll map out the project and get started — with fair pricing and full transparency every step of the way.
   </p>
 </section>
 

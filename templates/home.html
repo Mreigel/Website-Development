@@ -31,8 +31,9 @@
 <section class="team-section">
   <h2 class="section-title" style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Meet the Team</h2>
   <div class="swiper-container team-carousel">
-    <div class="swiper-wrapper">
 
+    <!-- This is the swipeable content wrapper -->
+    <div class="swiper-wrapper">
       <!-- Michael -->
       <div class="swiper-slide">
         <div class="team-card" style="text-align: center; padding: 1.5rem;">
@@ -58,27 +59,15 @@
           </div>
         </div>
       </div>
-
-      <!-- Andrew -->
-      <div class="swiper-slide">
-        <div class="team-card" style="text-align: center; padding: 1.5rem;">
-          <img src="{{ url_for('static', filename='images/andrew.jpg') }}" alt="Andrew" class="team-photo" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
-          <div class="team-info">
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Andrew Murphy</h3>
-            <p style="font-size: 1.1rem; color: #ccc; max-width: 600px; margin: 0 auto;">
-              Backend & DevOps Engineer. USMC Veteran with a strong background in server management, CI/CD pipelines, and infrastructure automation. Andrew ensures every project runs smoothly from development to production.
-            </p>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <!-- Navigation arrows -->
+    <!-- Move these out of swiper-wrapper -->
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
+
   </div>
 </section>
+
 
   <!-- Website Summary Section -->
 <section class="section-block fade-up">
