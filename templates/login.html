@@ -6,76 +6,121 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #0f172a;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
+      color: #f8fafc;
     }
+
     .login-container {
-      background-color: #fff;
+      background-color: #1e293b;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
       max-width: 400px;
       width: 100%;
+      position: relative;
     }
+
     h2 {
       text-align: center;
-      color: #333;
+      color: #f8fafc;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
     }
+
     label {
       display: block;
       margin-top: 1rem;
       font-weight: bold;
-      color: #555;
+      color: #e2e8f0;
     }
+
     input {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.6rem;
       margin-top: 0.3rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #334155;
+      background-color: #0f172a;
+      color: #f1f5f9;
+      border-radius: 6px;
+      font-size: 1rem;
     }
+
+    input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.4);
+    }
+
     button {
       margin-top: 1.5rem;
       width: 100%;
-      padding: 0.7rem;
-      background-color: #28a745;
+      padding: 0.75rem;
+      background-color: #22c55e;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       font-size: 1rem;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #1e7e34;
+      background-color: #16a34a;
     }
+
     .extra-links {
       text-align: center;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
     }
+
     .extra-links a {
-      color: #007bff;
+      color: #60a5fa;
       text-decoration: none;
       margin: 0 5px;
     }
+
     .extra-links a:hover {
       text-decoration: underline;
     }
+
     .flash {
-      background-color: #ffc107;
-      color: #333;
+      background-color: #facc15;
+      color: #1f2937;
       padding: 0.5rem;
       border-radius: 5px;
       margin-bottom: 1rem;
       text-align: center;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .back-button a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .back-button a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
 <div class="login-container">
+  <div class="back-button">
+    <a href="{{ url_for('routes.home') }}">&larr; Back to Home</a>
+  </div>
+
   <h2>Login</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
@@ -87,18 +132,21 @@
   {% endwith %}
 
   <form method="POST">
-    <label for="username">Username or Email</label>
-    <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <label for="password">Password</label>
-    <input type="password" name="password" required>
+  <label for="username">Username or Email</label>
+  <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
 
-    <button type="submit">Login</button>
-  </form>
+  <label for="password">Password</label>
+  <input type="password" name="password" required>
+
+  <button type="submit">Login</button>
+</form>
+
 
   <div class="extra-links">
-    <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
-    <p><a href="{{ url_for('home') }}">Back to Home</a></p>
+    <p>Don't have an account? <a href="{{ url_for('routes.register') }}">Register here</a>.</p>
+    <p><a href="{{ url_for('routes.home') }}">Back to Home</a></p>
   </div>
 </div>
 

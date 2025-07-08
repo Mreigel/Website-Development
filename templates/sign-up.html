@@ -5,84 +5,132 @@
   <title>Register</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .signup-container {
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 500px;
-      width: 100%;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: bold;
-      color: #555;
-    }
-    input, select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.3rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      margin-top: 1.5rem;
-      width: 100%;
-      padding: 0.7rem;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .error {
-      color: red;
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-    .flash {
-      background-color: #ffc107;
-      color: #333;
-      padding: 0.5rem;
-      border-radius: 5px;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .extra-links {
-      text-align: center;
-      margin-top: 1rem;
-    }
-    .extra-links a {
-      color: #007bff;
-      text-decoration: none;
-      margin: 0 5px;
-    }
-    .extra-links a:hover {
-      text-decoration: underline;
-    }
+  font-family: 'Fira Sans', sans-serif;
+  background-color: #0f172a;
+  margin: 0;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  color: #f8fafc;
+  overflow-y: auto;
+}
+
+.signup-container {
+  background-color: #1e293b;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  text-align: center;
+  color: #f8fafc;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #e2e8f0;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #334155;
+  background-color: #0f1a2a; /* slightly deeper */
+  color: #f1f5f9;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.4);
+}
+
+button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2563eb;
+}
+
+.error {
+  color: #f87171;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.flash {
+  background-color: #facc15;
+  color: #1f2937;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.extra-links {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.extra-links a {
+  color: #60a5fa;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.extra-links a:hover {
+  text-decoration: underline;
+}
+
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.9rem;
+}
+
+.back-button a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.back-button a:hover {
+  text-decoration: underline;
+}
+
   </style>
 </head>
 <body>
 
 <div class="signup-container">
+  <div class="back-button">
+    <a href="{{ url_for('routes.home') }}">&larr; Back to Home</a>
+  </div>
+
   <h2>Create Account</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
@@ -94,6 +142,7 @@
   {% endwith %}
 
   <form method="POST" onsubmit="return validateForm()">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label for="first-name">First Name</label>
     <input type="text" name="first_name" id="first-name" required>
 
@@ -135,8 +184,8 @@
   </form>
 
   <div class="extra-links">
-    <p>Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.</p>
-    <p><a href="{{ url_for('home') }}">Back to Home</a></p>
+    <p>Already have an account? <a href="{{ url_for('routes.login') }}">Log in here</a>.</p>
+    <p><a href="{{ url_for('routes.home') }}">Back to Home</a></p>
   </div>
 </div>
 

@@ -3,21 +3,41 @@
 {% block title %}Coming Soon{% endblock %}
 
 {% block content %}
-<div class="coming-soon-container" style="max-width: 600px; margin: 80px auto; text-align: center;">
-  <h1 style="color: #6b5e4a; font-weight: 700; font-size: 3.5rem; margin-bottom: 0.5em;">Coming Soon</h1>
-  <p style="color: #4a4031; font-size: 1.25rem; margin-bottom: 2em; line-height: 1.4;">
-    We’re working hard to bring you this page. Check back soon!
+<div class="coming-soon-container" style="
+  max-width: 600px;
+  margin: 100px auto;
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  color: #f8fafc;
+  font-family: 'Fira Sans', sans-serif;
+">
+
+  <h1 style="
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #3b82f6;
+  ">🚧 Coming Soon</h1>
+
+  <p style="
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    color: #cbd5e1;
+  ">
+    We’re building something awesome. This page will be live shortly.
   </p>
-  <a href="{{ url_for('home') }}" class="button" style="
-    background-color: #a1887f;
+
+  <a href="{{ url_for('routes.home') }}" class="button" style="
+    background-color: #3b82f6;
     color: white;
-    padding: 15px 40px;
+    padding: 12px 32px;
     text-decoration: none;
     font-weight: 600;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(161,136,127,0.4);
     transition: background-color 0.3s ease;
-    display: inline-block;
-  " onmouseover="this.style.backgroundColor='#6b5e4a'" onmouseout="this.style.backgroundColor='#a1887f'">Back to Home</a>
+  " onmouseover="this.style.backgroundColor='#2563eb'" onmouseout="this.style.backgroundColor='#3b82f6'">Back to Home</a>
 </div>
 {% endblock %}

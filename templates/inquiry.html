@@ -4,9 +4,10 @@
 {% block content %}
 <section class="form-section">
   <h1>Tell Us About Your Project</h1>
-  <form method="POST" action="{{ url_for('inquiry') }}" class="inquiry-form" id="multiStepForm">
+  <form method="POST" action="{{ url_for('routes.inquiry') }}" class="inquiry-form" id="multiStepForm">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <!-- Step 1: Project Idea -->
+    <!-- Step 1: Project Info -->
     <div class="form-step active">
       <label for="title">Project Title:</label>
       <input type="text" name="title" placeholder="e.g., Portfolio Website, E-Commerce Store" required>
@@ -16,6 +17,35 @@
 
       <label for="goals">Main Goals or Features (optional):</label>
       <textarea name="goals" rows="4" placeholder="e.g., user login, admin panel, real-time chat, mobile-friendly design"></textarea>
+
+      <label for="budget">Estimated Budget Range:</label>
+      <select name="budget" required>
+        <option value="starter">Just getting started (under $1k)</option>
+        <option value="small">Small project ($1k–$3k)</option>
+        <option value="mid">Custom build ($3k–$7k)</option>
+        <option value="large">Full-featured site ($7k+)</option>
+      </select>
+
+      <label for="timeline">Timeline or Deadline:</label>
+      <input type="text" name="timeline" placeholder="e.g., ASAP, 2 months, by October 1st" required>
+
+      <label for="referral">How Did You Hear About Us?</label>
+      <select name="referral">
+        <option value="" disabled selected>Select one</option>
+        <option value="google">Google Search</option>
+        <option value="social">Social Media</option>
+        <option value="referral">Referred by a friend</option>
+        <option value="returning">I’m a returning client</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="start_readiness">Are You Ready to Start?</label>
+      <select name="start_readiness" required>
+        <option value="" disabled selected>Select one</option>
+        <option value="yes">Yes – I'm ready to get started</option>
+        <option value="soon">Soon – within the next month</option>
+        <option value="exploring">Just exploring ideas</option>
+      </select>
     </div>
 
     <!-- Step 2: Contact Info -->
@@ -47,7 +77,7 @@
       <input type="text" name="token" placeholder="If referred or pre-verified">
     </div>
 
-    <!-- Buttons -->
+    <!-- Navigation Buttons -->
     <div class="form-nav">
       <button type="button" id="prevBtn">Back</button>
       <button type="button" id="nextBtn">Next</button>
@@ -90,5 +120,4 @@
 
   showStep(currentStep);
 </script>
-
 {% endblock %}

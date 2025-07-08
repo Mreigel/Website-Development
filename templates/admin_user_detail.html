@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Admin - User Detail Page -->
+<div class="account-container" style="display: flex; justify-content: center; align-items: center; min-height: 90vh; background-color: #0f172a; font-family: 'Fira Sans', sans-serif;">
+  <div style="width: 100%; max-width: 800px; background-color: #1e293b; padding: 48px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); color: #f8fafc;">
+
+    <div style="margin-bottom: 1.5rem;">
+      <a href="{{ url_for('routes.admin') }}#users" style="display: inline-block; padding: 10px 20px; background-color: #334155; color: white; border-radius: 8px; text-decoration: none;">
+        ← Back to User List
+      </a>
+    </div>
+
+    <h2 style="font-size: 2rem; margin-bottom: 20px;">🧑‍💻 User Details</h2>
+
+    <form id="editForm" method="POST" action="{{ url_for('routes.admin_user_detail', user_id=user.id) }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" value="{{ user.username }}" disabled>
+
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" value="{{ user.email }}" disabled>
+
+      <label for="is_admin">Admin Status:</label>
+      <select name="is_admin" id="is_admin" disabled>
+        <option value="true" {% if user.is_admin %}selected{% endif %}>Yes</option>
+        <option value="false" {% if not user.is_admin %}selected{% endif %}>No</option>
+      </select>
+
+      <label>Joined:</label>
+      <p>{{ user.created_at.strftime('%Y-%m-%d') }}</p>
+
+      <div style="margin-top: 20px;">
+        <button type="button" onclick="toggleEdit(true)">Edit</button>
+        <button type="submit" id="saveBtn" style="display:none">Confirm & Save</button>
+        <button type="button" onclick="toggleEdit(false)" id="cancelBtn" style="display:none">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+  function toggleEdit(editing) {
+    const form = document.getElementById('editForm');
+    if (!form) return;
+
+    form.querySelectorAll('input, select').forEach(el => el.disabled = !editing);
+    document.getElementById('saveBtn').style.display = editing ? 'inline-block' : 'none';
+    document.getElementById('cancelBtn').style.display = editing ? 'inline-block' : 'none';
+  }
+</script>
+
+
+<style>
+  label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #475569;
+    border-radius: 8px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #334155;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #475569;
+  }
+</style>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="admin-dashboard" style="display: flex; justify-content: center; align-items: flex-start; padding: 2rem; background-color: #0f172a; font-family: 'Fira Sans', sans-serif; min-height: 90vh;">
+  <div style="display: flex; background-color: #1e293b; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.3); overflow: hidden; width: 100%; max-width: 1300px;">
+
+    <!-- Sidebar -->
+    <div style="min-width: 220px; background-color: #0f172a; padding: 24px; border-right: 1px solid #334155;">
+      <h3 style="color: #f8fafc; margin-bottom: 1.5rem; font-size: 1.25rem;">Admin Console</h3>
+      <ul style="list-style: none; padding-left: 0;">
+        <li style="margin-bottom: 1rem;"><a href="#profile" class="tab-link" style="color: #94a3b8; text-decoration: none;">👤 Profile Info</a></li>
+        <li style="margin-bottom: 1rem;"><a href="#projects" class="tab-link" style="color: #94a3b8; text-decoration: none;">📁 Project Updates</a></li>
+        <li style="margin-bottom: 1rem;"><a href="#security" class="tab-link" style="color: #94a3b8; text-decoration: none;">🔐 Security Settings</a></li>
+        <li style="margin-bottom: 1rem;"><a href="#users" class="tab-link" style="color: #facc15; text-decoration: none; font-weight: bold;">🧑‍🤝‍🧑 Manage Users</a></li>
+        <li><a href="#inquiries" class="tab-link" style="color: #94a3b8; text-decoration: none;">💬 View Inquiries</a></li>
+      </ul>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" style="flex-grow: 1; padding: 32px; color: #f8fafc;">
+      <h2 style="font-size: 1.75rem; margin-bottom: 1rem;">👥 Manage Users</h2>
+      <table style="width: 100%; border-collapse: collapse; font-size: 1rem;">
+        <thead>
+          <tr style="background-color: #334155;">
+            <th style="padding: 10px;">ID</th>
+            <th style="padding: 10px;">Username</th>
+            <th style="padding: 10px;">Email</th>
+            <th style="padding: 10px;">Joined</th>
+            <th style="padding: 10px;">Admin</th>
+            <th style="padding: 10px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr style="border-bottom: 1px solid #475569;">
+            <td style="padding: 10px;">{{ user.id }}</td>
+            <td style="padding: 10px;">{{ user.username }}</td>
+            <td style="padding: 10px;">{{ user.email }}</td>
+            <td style="padding: 10px;">{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+            <td style="padding: 10px;">{{ 'Yes' if user.is_admin else 'No' }}</td>
+            <td style="padding: 10px;">
+              <a href="{{ url_for('routes.admin_user_detail', user_id=user.id) }}"
+                style="padding: 6px 12px; background-color: #38bdf8; color: white; border-radius: 6px; text-decoration: none;">
+                Details
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Optional: Tab switching script if you need dynamic tab control
+  const links = document.querySelectorAll('.tab-link');
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = link.getAttribute('href');
+      document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
+{% endblock %}

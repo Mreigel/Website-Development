@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Admin Console Area -->
+<div class="account-container" style="display: flex; justify-content: center; align-items: center; min-height: 90vh; background-color: #0f172a; font-family: 'Fira Sans', sans-serif;">
+  <div style="display: flex; width: 100%; max-width: 1200px; background-color: #1e293b; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+
+    <!-- Sidebar Navigation -->
+    <aside style="width: 240px; background-color: #1e293b; color: white; padding: 24px;">
+      <h2 style="margin-bottom: 24px; font-size: 1.5rem;">Admin Console</h2>
+      <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 10px;"><a href="#" onclick="showTab('profile')" class="tab-link active">👤 Profile Info</a></li>
+        <li style="margin-bottom: 10px;"><a href="#" onclick="showTab('projects')" class="tab-link">📁 Project Updates</a></li>
+        <li style="margin-bottom: 10px;"><a href="#" onclick="showTab('security')" class="tab-link">🔒 Security Settings</a></li>
+        <li style="margin-bottom: 10px;"><a href="#" onclick="showTab('users')" class="tab-link">🧑‍💻 Manage Users</a></li>
+        <li style="margin-bottom: 10px;"><a href="#" onclick="showTab('inquiries')" class="tab-link">📨 View Inquiries</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main style="flex: 1; padding: 48px; background-color: #0f172a; color: #f8fafc;">
+
+<div class="tab-content" id="profile" style="display: block;">
+  <h2 class="text-2xl font-bold mb-6">👤 Profile Info</h2>
+
+  <form id="profileForm" method="POST" action="{{ url_for('routes.update_profile') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <!-- Full Name -->
+      <div style="background-color: #1e293b; padding: 16px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+        <label class="block text-sm font-semibold mb-1 text-white">Full Name</label>
+        <p id="display_full_name" class="text-gray-300">{{ current_user.full_name or 'Not provided' }}</p>
+        <input type="text" name="full_name" id="input_full_name"
+               value="{{ current_user.full_name or '' }}"
+               class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring focus:border-blue-400"
+               style="display: none;">
+      </div>
+
+      <!-- Address -->
+      <div>
+        <label class="block text-sm font-semibold mb-1 text-white">Address</label>
+        <p id="display_address" class="text-gray-300">{{ current_user.address or 'Not provided' }}</p>
+        <input type="text" name="address" id="input_address"
+          value="{{ current_user.address or '' }}"
+          class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring focus:border-blue-400"
+          style="display: none;">
+      </div>
+
+      <!-- Username -->
+      <div>
+        <label class="block text-sm font-semibold mb-1 text-white">Username</label>
+        <p class="text-gray-300">{{ current_user.username }}</p>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-semibold mb-1 text-white">Email</label>
+        <p class="text-gray-300">{{ current_user.email }}</p>
+      </div>
+
+      <!-- Admin -->
+      <div>
+        <label class="block text-sm font-semibold mb-1 text-white">Admin</label>
+        <p class="text-cyan-400">{{ 'Yes' if current_user.is_admin else 'No' }}</p>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-8 flex gap-4">
+      <button type="button" id="editBtn" onclick="toggleProfileEdit(true)" class="btn btn-edit">
+        ✏️ Edit
+      </button>
+      <button type="submit" id="saveBtn" style="display: none;" class="btn btn-save">
+        💾 Save Changes
+      </button>
+      <button type="button" id="cancelBtn" style="display: none;" onclick="toggleProfileEdit(false)" class="btn btn-cancel">
+        ❌ Cancel
+      </button>
+    </div>
+  </form>
+</div>
+
+
+      <!-- Project Updates Tab -->
+      <div class="tab-content" id="projects" style="display: none;">
+        <h2 style="font-size: 1.75rem; margin-bottom: 20px;">📁 Project Updates</h2>
+        <p>View and manage submitted projects here (feature coming soon).</p>
+      </div>
+
+      <!-- Security Settings Tab -->
+      <div class="tab-content" id="security" style="display: none;">
+        <h2 style="font-size: 1.75rem; margin-bottom: 20px;">🔒 Security Settings</h2>
+        <p>Admin security preferences will be configured here.</p>
+      </div>
+
+      <!-- Manage Users Tab -->
+      <div class="tab-content" id="users" style="display: none;">
+        <h2 style="font-size: 1.75rem; margin-bottom: 20px;">🧑‍💻 Manage Users</h2>
+        {% if users %}
+        <table style="width: 100%; border-collapse: collapse; font-size: 1rem;">
+          <thead>
+            <tr style="background-color: #334155;">
+              <th style="padding: 10px;">ID</th>
+              <th style="padding: 10px;">Username</th>
+              <th style="padding: 10px;">Email</th>
+              <th style="padding: 10px;">Joined</th>
+              <th style="padding: 10px;">Admin</th>
+              <th style="padding: 10px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr style="border-bottom: 1px solid #475569;">
+              <td style="padding: 10px;">{{ user.id }}</td>
+              <td style="padding: 10px;">{{ user.username }}</td>
+              <td style="padding: 10px;">{{ user.email }}</td>
+              <td style="padding: 10px;">{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+              <td style="padding: 10px;">{{ 'Yes' if user.is_admin else 'No' }}</td>
+              <td style="padding: 10px;">
+                <a href="{{ url_for('routes.admin_user_detail', user_id=user.id) }}"
+                   style="padding: 6px 12px; background-color: #38bdf8; color: white; border-radius: 6px; text-decoration: none;">
+                  Details
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p>No users found.</p>
+        {% endif %}
+      </div>
+
+      <!-- Inquiries Tab -->
+      <div class="tab-content" id="inquiries" style="display: none;">
+        <h2 style="font-size: 1.75rem; margin-bottom: 20px;">📨 User Inquiries</h2>
+
+        {% if messages %}
+          {% for msg in messages %}
+            <div style="margin-bottom: 1.5rem; padding: 1rem; background-color: #1e293b; border-left: 4px solid #38bdf8; border-radius: 8px;">
+              <p><strong>From:</strong> {{ msg.sender.username }} — {{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
+              <p style="margin-top: 8px;">{{ msg.content }}</p>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No inquiries yet.</p>
+        {% endif %}
+      </div>
+
+    </main>
+  </div>
+</div>
+<script>
+  function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).style.display = 'block';
+    event.target.classList.add('active');
+  }
+
+  function toggleProfileEdit(enable) {
+    const form = document.getElementById('profileForm');
+    if (!form) return;
+
+    // Enable or disable specific inputs
+    form.querySelectorAll('input[name="full_name"], input[name="address"]').forEach(el => {
+      el.disabled = !enable;
+    });
+
+    // Toggle button visibility
+    document.getElementById('editBtn').style.display = enable ? 'none' : 'inline-block';
+    document.getElementById('saveBtn').style.display = enable ? 'inline-block' : 'none';
+    document.getElementById('cancelBtn').style.display = enable ? 'inline-block' : 'none';
+  }
+</script>
+
+<script>
+  function toggleProfileEdit(enable) {
+    const displayFields = ['display_full_name', 'display_address'];
+    const inputFields = ['input_full_name', 'input_address'];
+
+    displayFields.forEach(id => {
+      document.getElementById(id).style.display = enable ? 'none' : 'block';
+    });
+
+    inputFields.forEach(id => {
+      document.getElementById(id).style.display = enable ? 'block' : 'none';
+    });
+
+    document.getElementById('editBtn').style.display = enable ? 'none' : 'inline-block';
+    document.getElementById('saveBtn').style.display = enable ? 'inline-block' : 'none';
+    document.getElementById('cancelBtn').style.display = enable ? 'inline-block' : 'none';
+  }
+</script>
+
+<style>
+  .tab-link {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #f8fafc;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .tab-link:hover,
+  .tab-link.active {
+    background-color: #334155;
+    color: #38bdf8;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    font-family: 'Fira Sans', sans-serif;
+  }
+
+  .btn-edit {
+    background-color: #3b82f6; /* Blue */
+    color: white;
+  }
+
+  .btn-edit:hover {
+    background-color: #60a5fa;
+    transform: scale(1.02);
+  }
+
+  .btn-save {
+    background-color: #10b981; /* Green */
+    color: white;
+  }
+
+  .btn-save:hover {
+    background-color: #34d399;
+    transform: scale(1.02);
+  }
+
+  .btn-cancel {
+    background-color: #6b7280; /* Gray */
+    color: white;
+  }
+
+  .btn-cancel:hover {
+    background-color: #9ca3af;
+    transform: scale(1.02);
+  }
+
+</style>
+
+{% endblock %}

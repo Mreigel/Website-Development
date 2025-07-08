@@ -4,7 +4,8 @@
 {% block content %}
 <section class="form-section">
   <h1>Join Our Dev Team</h1>
-  <form method="POST" action="{{ url_for('join') }}" enctype="multipart/form-data" class="inquiry-form" id="joinStepForm">
+  <form method="POST" action="{{ url_for('routes.join') }}" enctype="multipart/form-data" class="inquiry-form" id="joinStepForm">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
     <!-- Step 1: Background & Skills -->
     <div class="form-step active">
