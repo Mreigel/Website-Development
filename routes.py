@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, request, url_for, flash,
 from sqlalchemy import or_, func
 from werkzeug.utils import secure_filename
 from models import db, User, Project, Message
+from encryption import encrypt_field, decrypt_field
 import os
 from datetime import datetime
 
@@ -75,7 +76,7 @@ def admin_user_detail(user_id):
             return redirect(url_for('routes.admin_user_detail', user_id=user.id))
 
         user.username = username
-        user.email = email
+        user.email = encrypt_field(email)
         user.is_admin = is_admin
         db.session.commit()
         flash("User info updated successfully.", "success")
@@ -150,15 +151,16 @@ def register():
         email = request.form.get('email', '').strip().lower()
         password = request.form.get('password')
 
+        for u in User.query.all():
+            if decrypt_field(u.email).lower() == email:
+                flash("Email already in use.", "error")
+                return redirect(url_for('routes.register'))
+
         if User.query.filter_by(username=username).first():
             flash("Username already taken.", "error")
             return redirect(url_for('routes.register'))
 
-        if User.query.filter_by(email=email).first():
-            flash("Email already in use.", "error")
-            return redirect(url_for('routes.register'))
-
-        new_user = User(username=username, email=email)
+        new_user = User(username=username, email=encrypt_field(email))
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
@@ -174,7 +176,11 @@ def login():
         identifier = request.form.get('username', '').strip().lower()
         password = request.form.get('password')
 
-        user = User.query.filter(or_(func.lower(User.username) == identifier, func.lower(User.email) == identifier)).first()
+        user = None
+        for u in User.query.all():
+            if decrypt_field(u.email).lower() == identifier or u.username.lower() == identifier:
+                user = u
+                break
 
         if user and user.check_password(password):
             session['user_id'] = user.id
@@ -219,15 +225,12 @@ def update_email():
     new_email = request.form.get('new_email', '').strip().lower()
     user = User.query.get(session['user_id'])
 
-    if not new_email:
-        flash("New email is required.", "error")
-        return redirect(url_for('routes.account'))
+    for u in User.query.all():
+        if decrypt_field(u.email).lower() == new_email:
+            flash("This email is already in use.", "error")
+            return redirect(url_for('routes.account'))
 
-    if User.query.filter_by(email=new_email).first():
-        flash("This email is already in use.", "error")
-        return redirect(url_for('routes.account'))
-
-    user.email = new_email
+    user.email = encrypt_field(new_email)
     db.session.commit()
     flash("Email updated. Verification logic coming soon.", "success")
     return redirect(url_for('routes.account'))
@@ -258,8 +261,8 @@ def update_profile():
         return redirect(url_for('routes.login'))
 
     user = User.query.get(session['user_id'])
-    user.full_name = request.form.get('full_name')
-    user.address = request.form.get('address')
+    user.full_name = encrypt_field(request.form.get('full_name'))
+    user.address = encrypt_field(request.form.get('address'))
 
     db.session.commit()
     flash("Profile updated.", "success")

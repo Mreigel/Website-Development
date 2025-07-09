@@ -1,9 +1,6 @@
 # Elastic Beanstalk
-# Don't ignore the folder itself
 !.elasticbeanstalk/
-# Ignore everything inside it
 .elasticbeanstalk/*
-# But don't ignore these specific config files
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
@@ -23,8 +20,3 @@ __pycache__/
 
 # Local SQLite databases
 *.db
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml

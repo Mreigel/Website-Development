@@ -3,8 +3,11 @@ FROM python:3.12-slim
 # Set working directory
 WORKDIR /app
 
-# Install system deps (optional: needed if you use things like Pillow, etc.)
-RUN apt-get update && apt-get install -y --no-install-recommends gcc && rm -rf /var/lib/apt/lists/*
+# Install system deps (adds libpq-dev for psycopg2-binary)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libpq-dev \
+ && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install
 COPY requirements.txt .

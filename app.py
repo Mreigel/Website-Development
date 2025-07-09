@@ -1,33 +1,79 @@
-from flask import Flask, session
-from flask_wtf.csrf import CSRFProtect
-from datetime import datetime
 import os
+import json
+import boto3
+import logging
+from flask import Flask, session
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
+from flask_migrate import Migrate
+from models import db, User, Project, Message
+from dotenv import load_dotenv
+from botocore.exceptions import ClientError
 
-# --- App Setup ---
+# --- Load local .env for local dev
+load_dotenv()
+
+# --- App Setup
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'dev')
+csrf = CSRFProtect()
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'portfolio.db')
+# --- Logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# --- DB Setup
+USE_SQLITE = os.getenv("USE_SQLITE") == "true"
+
+if USE_SQLITE:
+    app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portfolio.db'
+else:
+    secret_name = os.environ.get("RDS_SECRET_NAME")
+    region_name = os.environ.get("AWS_REGION", "us-west-1")
+    if not secret_name:
+        logger.error("❌ Missing RDS_SECRET_NAME in environment")
+        raise RuntimeError("Missing RDS_SECRET_NAME")
+
+    session_boto = boto3.session.Session()
+    client = session_boto.client(service_name='secretsmanager', region_name=region_name)
+
+    try:
+        get_secret_value_response = client.get_secret_value(SecretId=secret_name)
+        secret_data = json.loads(get_secret_value_response['SecretString'])
+    except ClientError as e:
+        logger.error(f"❌ Failed to retrieve secret: {e}")
+        raise
+
+    app.secret_key = secret_data.get("secret_key", os.urandom(24))
+    username = secret_data['username']
+    password = secret_data['password']
+    host = os.environ.get("DB_HOST")
+    port = os.environ.get("DB_PORT", "5432")
+    dbname = os.environ.get("DB_NAME", "postgres")
+
+    if not all([host, port, dbname]):
+        raise RuntimeError("❌ Missing DB_HOST, DB_PORT, or DB_NAME")
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = (
+        f"postgresql://{username}:{password}@{host}:{port}/{dbname}"
+    )
+
+# --- Common Config
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-
-# --- Extensions ---
-csrf = CSRFProtect()
-csrf.init_app(app)
-
-# --- Import models AFTER app setup ---
-from models import db, User, Project, Message
+# --- Init Extensions
 db.init_app(app)
+csrf.init_app(app)
+migrate = Migrate(app, db)
 
-# --- Import routes AFTER models are loaded ---
+# --- Register routes
 from routes import routes
 app.register_blueprint(routes, url_prefix='')
 
-# --- Context Processors ---
+# --- Global user context
 @app.context_processor
 def inject_globals():
     user = None
@@ -35,38 +81,17 @@ def inject_globals():
         user = User.query.get(session['user_id'])
     return dict(current_user=user)
 
+# --- Health Check
+@app.route("/health")
+def health():
+    return "OK", 200
+
+# --- Flask Shell
 @app.shell_context_processor
 def make_shell_context():
     return {'db': db, 'Project': Project, 'User': User}
 
-# --- Sample Seed ---
-with app.app_context():
-    db.create_all()
-    if not Project.query.first():
-        sample_projects = [
-            {
-                "name": "E-Commerce Template",
-                "description": "A modern online store built with Flask.",
-                "tech_stack": "Flask, SQLite, HTML/CSS",
-                "image": "project1.jpg",
-                "github_link": "https://github.com/Mreigel/ecommerce-demo",
-                "live_demo_link": "#"
-            },
-            {
-                "name": "Freelancer Portfolio",
-                "description": "A responsive portfolio website for showcasing personal projects.",
-                "tech_stack": "HTML, CSS, JS",
-                "image": "project2.jpg",
-                "github_link": "https://github.com/Mreigel/portfolio",
-                "live_demo_link": "#"
-            }
-        ]
-        for p in sample_projects:
-            db.session.add(Project(**p))
-        db.session.commit()
-        print("✅ Sample projects seeded.")
-
-# --- WSGI Entrypoint ---
+# --- Entrypoint
 application = app
 
 if __name__ == '__main__':
