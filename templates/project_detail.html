@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
 
-</body>
-</html>
+<div class="project-detail-container" style="padding: 2rem; max-width: 900px; margin: auto; color: #f8fafc; background-color: #0f172a; font-family: 'Fira Sans', sans-serif;">
+  <h1 style="font-size: 2rem; margin-bottom: 1rem;">{{ project.title }}</h1>
+
+  <div class="project-meta" style="margin-bottom: 1.5rem;">
+    <p><strong>Status:</strong> {{ project.status }}</p>
+    <p><strong>Start Date:</strong> {{ project.start_date.strftime('%B %d, %Y') if project.start_date }}</p>
+    <p><strong>Last Updated:</strong> {{ project.updated_at.strftime('%B %d, %Y') if project.updated_at }}</p>
+  </div>
+
+  <div class="project-description" style="margin-bottom: 2rem;">
+    <p>{{ project.description }}</p>
+  </div>
+
+  {% if project.image_url %}
+    <div class="project-image" style="margin-bottom: 2rem; text-align: center;">
+      <img src="{{ url_for('static', filename=project.image_url) }}" alt="Project image" style="max-width: 100%; border-radius: 8px;">
+    </div>
+  {% endif %}
+
+  <a href="{{ url_for('routes.projects') }}" class="btn btn-primary">&larr; Back to Projects</a>
+</div>
+
+{% endblock %}

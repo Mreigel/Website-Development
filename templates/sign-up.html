@@ -122,16 +122,15 @@ button:hover {
   text-decoration: underline;
 }
 
-  </style>
+    </style>
 </head>
 <body>
-
 <div class="signup-container">
   <div class="back-button">
     <a href="{{ url_for('routes.home') }}">&larr; Back to Home</a>
   </div>
 
-  <h2>Create Account</h2>
+<h2>Create Account</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -142,7 +141,8 @@ button:hover {
   {% endwith %}
 
   <form method="POST" onsubmit="return validateForm()">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
     <label for="first-name">First Name</label>
     <input type="text" name="first_name" id="first-name" required>
 
@@ -162,11 +162,12 @@ button:hover {
     <input type="text" name="state" id="state" maxlength="2" required>
 
     <label for="zip">Zip Code</label>
-    <input type="text" name="zip" id="zip" pattern="\d{5}" required>
+    <input type="text" name="zip_code" id="zip" pattern="\d{5}" required>
 
     <label for="country">Country</label>
     <select name="country" id="country" required>
-      <option value="US" selected>United States</option>
+      <option value="United States" selected>United States</option>
+      <!-- add more options here if needed -->
     </select>
 
     <label for="username">Username</label>
@@ -204,6 +205,6 @@ button:hover {
     return true;
   }
 </script>
-
 </body>
 </html>
+

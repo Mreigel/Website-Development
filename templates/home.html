@@ -2,89 +2,66 @@
 {% block title %}Home - Coast to Cloud Web Solutions{% endblock %}
 
 {% block content %}
-<!-- Static Hero Section -->
-<section class="hero-section" style="
-  background-image: url('{{ url_for('static', filename='images/hero1.jpg') }}');
-  background-size: cover;
-  background-position: top center;
-  height: 65vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-">
-  <div class="hero-content" style="
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 2rem;
-    border-radius: 0.5rem;
-    max-width: 90%;
-  ">
-    <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">Custom Web Design & Development</h1>
-    <p style="font-size: 1rem; margin-bottom: 1.5rem;">Coast to Cloud Web Solutions</p>
-    <a class="btn-primary" href="{{ url_for('routes.inquiry') }}">Inquire Now</a>
+
+<!-- ✅ Hero Section Outside of .content -->
+<section class="home-hero-container">
+  <div class="home-hero-background">
+    <div class="home-hero-content">
+      <h1>Custom Web Design & Development</h1>
+      <p>Coast to Cloud Web Solutions</p>
+      <a href="{{ url_for('routes.inquiry') }}" class="btn-hero">Inquire Now</a>
+    </div>
   </div>
 </section>
 
-
+<!-- ✅ Team Section inside .content -->
 <section class="team-section">
-  <h2 class="section-title" style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">Meet the Team</h2>
-  <div class="swiper-container team-carousel">
-
-    <!-- This is the swipeable content wrapper -->
+  <h2 class="section-title">Meet the Team</h2>
+  <div class="swiper team-carousel">
     <div class="swiper-wrapper">
       <!-- Michael -->
       <div class="swiper-slide">
-        <div class="team-card" style="text-align: center; padding: 1.5rem;">
-          <img src="{{ url_for('static', filename='images/michael.jpg') }}" alt="Michael" class="team-photo" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
+        <div class="team-card">
+          <img src="{{ url_for('static', filename='images/michael.jpg') }}" alt="Michael" class="team-photo">
           <div class="team-info">
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Michael Reigel</h3>
-            <p style="font-size: 1.1rem; color: #ccc; max-width: 600px; margin: 0 auto;">
+            <h3>Michael Reigel</h3>
+            <p>
               Founder & Full Stack Developer. USMC Veteran and cybersecurity major with a passion for building secure, scalable web systems. Michael leads architecture and deployment strategies for client projects, blending technical depth with creative precision.
             </p>
           </div>
         </div>
       </div>
-
       <!-- Joe -->
       <div class="swiper-slide">
-        <div class="team-card" style="text-align: center; padding: 1.5rem;">
-          <img src="{{ url_for('static', filename='images/joe.jpg') }}" alt="Joe" class="team-photo" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
+        <div class="team-card">
+          <img src="{{ url_for('static', filename='images/joe.jpg') }}" alt="Joe" class="team-photo">
           <div class="team-info">
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Joe Lima</h3>
-            <p style="font-size: 1.1rem; color: #ccc; max-width: 600px; margin: 0 auto;">
+            <h3>Joe Lima</h3>
+            <p>
               Frontend Developer. Joe specializes in UI/UX design and JavaScript frameworks like React. He focuses on building fast, responsive, and intuitive user interfaces that bring our clients’ visions to life with style and precision.
             </p>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Move these out of swiper-wrapper -->
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
-
   </div>
 </section>
 
-
-  <!-- Website Summary Section -->
+<!-- ✅ Website Summary Section -->
 <section class="section-block fade-up">
   <div class="content text-center">
-<h2>What We Do</h2>
-<p style="max-width: 800px; margin: 0 auto; font-size: 1.05rem; color: #ccc;">
-  In today’s world of AI builders and drag-and-drop templates, speed is easy — but quality and security? Not so much.
-  At Coast to Cloud, we offer the best of both worlds: rapid website development that doesn’t sacrifice custom design, clean code, or security. Whether you need something fast or something fully tailored — we build for you, not from a template.
-</p>
-<a href="{{ url_for('routes.inquiry') }}" class="btn btn-blue" style="margin-top: 24px;">Start Your Project</a>
-
-
+    <h2>What We Do</h2>
+    <p>
+      In today’s world of AI builders and drag-and-drop templates, speed is easy — but quality and security? Not so much.
+      At Coast to Cloud, we offer the best of both worlds: rapid website development that doesn’t sacrifice custom design, clean code, or security. Whether you need something fast or something fully tailored — we build for you, not from a template.
+    </p>
+    <a href="{{ url_for('routes.inquiry') }}" class="btn btn-blue" style="margin-top: 24px;">Start Your Project</a>
   </div>
 </section>
 
-</section>
-
+<!-- Swiper JS Setup -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const swiper = new Swiper('.team-carousel', {
@@ -106,4 +83,3 @@
 </script>
 
 {% endblock %}
-

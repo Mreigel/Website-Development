@@ -1,0 +1,27 @@
+{% set threads = {} %}
+{% for msg in messages %}
+  {% set threads = threads.update({msg.thread_id: threads.get(msg.thread_id, []) + [msg]}) or threads %}
+{% endfor %}
+
+<h2 class="text-2xl font-bold mb-6">📨 User Inquiries</h2>
+
+{% for thread_id, msgs in threads.items() %}
+  {% set user = msgs[0].sender %}
+  <div style="background-color: #1e293b; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <h3 style="margin-bottom: 10px;">Thread with {{ user.full_name or user.username }}</h3>
+
+    {% for msg in msgs %}
+      <div style="margin-bottom: 12px;">
+        <p><strong>{{ "Admin" if msg.is_from_admin else user.username }}:</strong> {{ msg.content }}</p>
+        <p style="font-size: 0.9rem; color: #94a3b8;">{{ msg.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</p>
+      </div>
+    {% endfor %}
+
+    <form method="POST" action="{{ url_for('routes.admin_reply') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="thread_id" value="{{ thread_id }}">
+      <textarea name="content" rows="2" placeholder="Write a reply..." required style="width: 100%; margin-bottom: 10px; padding: 10px; border-radius: 6px; background: #0f172a; color: #f8fafc; border: 1px solid #334155;"></textarea>
+      <button type="submit" class="btn btn-blue">Send Reply</button>
+    </form>
+  </div>
+{% endfor %}

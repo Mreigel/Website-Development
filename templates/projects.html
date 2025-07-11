@@ -4,43 +4,8 @@
 
 {% block content %}
 
-<style>
-  @media (max-width: 768px) {
-    .projects-grid {
-      grid-template-columns: 1fr !important;
-    }
-    .hero-text h1 {
-      font-size: 1.8rem;
-    }
-    .hero-text p {
-      font-size: 1rem;
-      padding: 0 10px;
-    }
-    .cta-box h2 {
-      font-size: 1.5rem;
-    }
-    .cta-box p {
-      padding: 0 10px;
-      font-size: 1rem;
-    }
-  }
-
-  .project-card {
-    background-color: #1e293b;
-    padding: 20px;
-    border-radius: 10px;
-    color: #f8fafc;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  }
-
-  .project-card a {
-    color: #3b82f6;
-    text-decoration: underline;
-  }
-</style>
-
 <!-- Hero Section -->
-<section class="hero-banner" style="text-align: center; padding: 60px 20px; background-color: #0f172a; color: #f8fafc;">
+<section class="hero-banner section-block" style="text-align: center; background-color: #0f172a; color: #f8fafc;">
   <div class="hero-text">
     <h1 style="font-size: 2.5rem; margin-bottom: 16px;">Projects That Speak for Themselves</h1>
     <p class="subtext" style="font-size: 1.2rem;">From concept to deployment — with security, structure, and style.</p>
@@ -48,43 +13,79 @@
 </section>
 
 <!-- Python & Flask Projects -->
-<section class="projects-section" style="max-width: 960px; margin: 40px auto; padding: 0 20px;">
-  <h2 style="text-align: center; margin-bottom: 20px;">Python & Flask Projects</h2>
-  <div class="projects-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-    <div class="project-card">
-      <h3>🛒 E-Commerce Platform</h3>
-      <p>A robust, secure e-commerce web app built with Python, Flask, and SQLAlchemy. Features user authentication, an admin dashboard, and responsive product layouts optimized for real-world scalability.</p>
-      <a href="https://github.com/Mreigel/ecommerce-demo" target="_blank">View on GitHub</a>
+<section class="projects-section section-block form-lightbox">
+  <h2 class="section-title">Python & Flask Projects</h2>
+  <div class="modern-projects-grid">
+
+    <!-- Card 1 - With image -->
+    <div class="modern-project-card" style="flex: 1 1 300px; max-width: 100%;">
+      <div class="project-image-box">
+        <img src="{{ url_for('static', filename='images/c2cscreenshot.jpg') }}" alt="Coast to Cloud Screenshot" loading="lazy">
+      </div>
+      <div>
+        <h3>🌐 Coast to Cloud Web Solutions (Live Site Repository)</h3>
+        <p>The official codebase behind our production website, built with Python (Flask), PostgreSQL, SQLAlchemy, and Docker. This repo includes full-stack implementation of user authentication, admin tools, project management features, and secure deployment to AWS Elastic Beanstalk — all styled with custom CSS and responsive mobile-first design.</p>
+      </div>
+      <div class="project-btn">
+        <a href="https://github.com/Mreigel/ecommerce-demo" target="_blank">View on GitHub</a>
+      </div>
     </div>
 
-    <div class="project-card">
-      <h3>🧾 Retail Shopping Template</h3>
-      <p>A flexible full-stack template built with Python, Docker, HTML, and CSS. Ideal for showcasing e-commerce functionality with a clean, responsive design — great for small business demos or product mockups.</p>
-      <a href="https://github.com/Mreigel/Shopping_Template" target="_blank">View on GitHub</a>
+    <!-- Card 2 - Retail Template -->
+    <div class="modern-project-card" style="flex: 1 1 300px; max-width: 100%;">
+      <div class="project-image-box">
+        <img src="{{ url_for('static', filename='images/ecommerce-demo.jpg') }}" alt="Retail Shopping Template Screenshot" loading="lazy">
+      </div>
+      <div>
+        <h3>🛒 Retail Shopping Template</h3>
+        <p>A flexible full-stack template built with Python, Docker, HTML, and CSS. Ideal for showcasing e-commerce functionality with a clean, responsive design — great for small business demos or product mockups.</p>
+      </div>
+      <div class="project-btn">
+        <a href="https://github.com/Mreigel/Shopping_Template" target="_blank">View on GitHub</a>
+      </div>
     </div>
+
   </div>
 </section>
 
 <!-- JavaScript & React Projects -->
-<section class="projects-section" style="max-width: 960px; margin: 40px auto; padding: 0 20px;">
-  <h2 style="text-align: center; margin-bottom: 20px;">JavaScript & React Projects</h2>
-  <div class="projects-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-    <div class="project-card">
-      <h3>🏡 Real Estate Listing Template</h3>
-      <p>A mobile-first real estate website built with modular JavaScript and Tailwind CSS. Features reusable components (navbar, footer), dynamic listing logic, and support for image galleries and detailed property pages. Includes static routing (about, contact, listings), Vite development tooling, and a flexible codebase ready for backend integration or deployment as a static site.</p>
-      <a href="https://github.com/Mreigel/real-estate-template" target="_blank">View on GitHub</a>
+<section class="projects-section section-block form-lightbox">
+  <h2 class="section-title">JavaScript & React Projects</h2>
+  <div class="modern-projects-grid">
+
+    <!-- Card 3 - Real Estate -->
+    <div class="modern-project-card" style="flex: 1 1 300px; max-width: 100%;">
+      <div class="project-image-box">
+        <img src="{{ url_for('static', filename='images/demo-screenshot.jpg') }}" alt="Real Estate Listing Template Screenshot" loading="lazy">
+      </div>
+      <div>
+        <h3>🏠 Real Estate Listing Template</h3>
+        <p>A mobile-first real estate website built with modular JavaScript and Tailwind CSS. Features reusable components (navbar, footer), dynamic listing logic, and support for image galleries and detailed property pages.</p>
+      </div>
+      <div class="project-btn">
+        <a href="https://github.com/Mreigel/real-estate-template" target="_blank">View on GitHub</a>
+      </div>
     </div>
 
-    <div class="project-card">
-      <h3>🛍️ Shopsite React E-Commerce</h3>
-      <p>A modern React-based e-commerce storefront featuring dynamic product routing, category filtering, and PayPal integration. Styled with Tailwind CSS for a clean, responsive UI. Built with Vite for fast development and optimized for smooth user experience with reusable components and modular architecture.</p>
-      <a href="https://github.com/Mreigel/Shopsite" target="_blank">View on GitHub</a>
+    <!-- Card 4 - Shopsite -->
+    <div class="modern-project-card" style="flex: 1 1 300px; max-width: 100%;">
+      <div class="project-image-box">
+        <img src="{{ url_for('static', filename='images/Shopsite-demo.jpg') }}" alt="Shopsite React E-Commerce Screenshot" loading="lazy">
+      </div>
+      <div>
+        <h3>🛒 Shopsite React E-Commerce</h3>
+        <p>A modern React-based e-commerce storefront featuring dynamic product routing, category filtering, and PayPal integration. Styled with Tailwind CSS and built with Vite for fast development and smooth UX.</p>
+      </div>
+      <div class="project-btn">
+        <a href="https://github.com/Mreigel/Shopsite" target="_blank">View on GitHub</a>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- Final CTA with Process -->
-<section class="cta-box" style="text-align: center; padding: 60px 20px; background-color: #1e293b; color: #f8fafc;">
+<!-- Final CTA -->
+<section class="cta-box section-block" style="text-align: center; background-color: #1e293b; color: #f8fafc;">
   <h2 style="margin-bottom: 16px;">Let’s Build Something Together</h2>
   <p style="max-width: 700px; margin: 0 auto;">
     Got an idea? Fill out our <a href="{{ url_for('routes.inquiry') }}" style="color: #3b82f6;">inquiry form</a> and we’ll follow up within 1 business day with the exclusion of holidays. If it’s a good fit, we’ll map out the project and get started — with fair pricing and full transparency every step of the way.

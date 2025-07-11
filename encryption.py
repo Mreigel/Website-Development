@@ -7,6 +7,11 @@ REGION = "us-west-1"
 KMS_KEY_ALIAS = "alias/pii-key"
 kms = boto3.client("kms", region_name=REGION)
 
+
+def set_encryption_key(key: str):
+    global _encryption_key
+    _encryption_key = key
+
 class EncryptionError(Exception):
     pass
 

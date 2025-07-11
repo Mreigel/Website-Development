@@ -15,7 +15,7 @@
   <!-- Your Stylesheet -->
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body class="dark-mode">
+<body class="dark-mode" style="margin: 0; padding: 0; font-family: 'Fira Sans', sans-serif;">
 
 <!-- Flash Message Toast -->
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -49,78 +49,77 @@
   {% endif %}
 {% endwith %}
 
+<!-- Navbar -->
+<nav style="display: flex; justify-content: space-between; padding: 1rem 2rem; background: #121212; color: #eee;">
+  <div class="nav-left" style="display: flex; gap: 1.5rem; align-items: center;">
+    <a href="{{ url_for('routes.home') }}">Home</a>
+    <a href="{{ url_for('routes.projects') }}">Projects</a>
+    <a href="{{ url_for('routes.inquiry') }}">Product Inquiry</a>
+    <a href="{{ url_for('routes.about') }}">About</a>
+    <a href="{{ url_for('routes.join') }}">Join Us</a>
+  </div>
+  <div class="nav-right" style="display: flex; align-items: center; gap: 1.5rem; position: relative;">
+    {% if current_user %}
+      <a href="{{ url_for('routes.account') }}">{{ current_user.username }}</a>
+      <a href="{{ url_for('routes.logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('routes.register') }}">Register</a>
+      <button id="signin-btn" style="cursor: pointer;">Sign In ▼</button>
+      <div id="signin-dropdown" style="display: none; position: absolute; top: 100%; right: 0; background: #1e1e1e; border: 1px solid #333; padding: 15px; width: 260px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); z-index: 1000;">
+        <form id="signin-form" method="POST" action="{{ url_for('routes.login') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <label for="username">Username or Email</label><br>
+          <input type="text" id="username" name="username" required style="width: 100%; margin-bottom: 10px;"><br>
+          <label for="password">Password</label><br>
+          <input type="password" id="password" name="password" required style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
+          <button type="submit" style="width: 100%; padding: 7px; background-color: #00bcd4; color: white; border: none; cursor: pointer;">
+            Sign In
+          </button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+</nav>
 
-  <!-- Navbar -->
-  <nav style="display: flex; justify-content: space-between; padding: 1rem 2rem; background: #121212; color: #eee; font-family: 'Fira Sans', sans-serif;">
-    <div class="nav-left" style="display: flex; gap: 1.5rem;">
-      <a href="{{ url_for('routes.home') }}">Home</a>
-      <a href="{{ url_for('routes.projects') }}">Projects</a>
-      <a href="{{ url_for('routes.inquiry') }}">Product Inquiry</a>
-      <a href="{{ url_for('routes.about') }}">About</a>
-      <a href="{{ url_for('routes.join') }}">Join Us</a>
-    </div>
-    <div class="nav-right" style="display: flex; align-items: center; gap: 1.5rem; position: relative;">
-      {% if current_user %}
-        <a href="{{ url_for('routes.account') }}">{{ current_user.username }}</a>
-        <a href="{{ url_for('routes.logout') }}">Logout</a>
-      {% else %}
-        <a href="{{ url_for('routes.register') }}">Register</a>
-        <button id="signin-btn" style="cursor: pointer;">Sign In ▼</button>
-        <div id="signin-dropdown" style="display: none; position: absolute; top: 100%; right: 0; background: #1e1e1e; border: 1px solid #333; padding: 15px; width: 260px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); z-index: 1000;">
-          <form id="signin-form" method="POST" action="{{ url_for('routes.login') }}">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <label for="username">Username or Email</label><br>
-            <input type="text" id="username" name="username" required style="width: 100%; margin-bottom: 10px;"><br>
-
-            <label for="password">Password</label><br>
-            <input type="password" id="password" name="password" required style="width: 100%; padding: 5px; margin-bottom: 10px;"><br>
-
-            <button type="submit" style="width: 100%; padding: 7px; background-color: #00bcd4; color: white; border: none; cursor: pointer;">
-              Sign In
-            </button>
-          </form>
-        </div>
-      {% endif %}
-    </div>
-  </nav>
-
+<div class="content-wrapper">
   {% block content %}{% endblock %}
+</div>
 
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Login Dropdown Toggle -->
-  <script>
-    const signinBtn = document.getElementById('signin-btn');
-    const signinDropdown = document.getElementById('signin-dropdown');
-    const signinForm = document.getElementById('signin-form');
+<!-- Login Dropdown Toggle -->
+<script>
+  const signinBtn = document.getElementById('signin-btn');
+  const signinDropdown = document.getElementById('signin-dropdown');
+  const signinForm = document.getElementById('signin-form');
 
-    if (signinBtn && signinDropdown) {
-      signinBtn.addEventListener('click', () => {
-        signinDropdown.style.display =
-          signinDropdown.style.display === 'block' ? 'none' : 'block';
-      });
+  if (signinBtn && signinDropdown) {
+    signinBtn.addEventListener('click', () => {
+      signinDropdown.style.display =
+        signinDropdown.style.display === 'block' ? 'none' : 'block';
+    });
 
-      window.addEventListener('click', (e) => {
-        if (!signinBtn.contains(e.target) && !signinDropdown.contains(e.target)) {
-          signinDropdown.style.display = 'none';
-        }
-      });
-    }
+    window.addEventListener('click', (e) => {
+      if (!signinBtn.contains(e.target) && !signinDropdown.contains(e.target)) {
+        signinDropdown.style.display = 'none';
+      }
+    });
+  }
 
-    if (signinForm) {
-      signinForm.addEventListener('submit', () => {
-        setTimeout(() => {
-          window.location.reload();  // Force full page reload after login
-        }, 300);
-      });
-    }
-  </script>
+  if (signinForm) {
+    signinForm.addEventListener('submit', () => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
+    });
+  }
+</script>
 
-  <!-- Global Footer -->
-  <footer style="background-color: #0f172a; color: #f8fafc; text-align: center; padding: 20px; font-size: 0.9rem; border-top: 1px solid #1e293b;">
-    <p>&copy; {{ current_year or 2025 }} Coast to Cloud Web Solutions — <em>C2CWebSolutions</em>. All rights reserved.</p>
-  </footer>
+  <footer class="footer-bar">
+  <p>&copy; {{ current_year or 2025 }} Coast to Cloud Web Solutions — C2CWebSolutions. All rights reserved.</p>
+</footer>
+
 
 </body>
 </html>

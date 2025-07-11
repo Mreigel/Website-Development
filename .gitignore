@@ -4,19 +4,40 @@
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
+# Deployment artifact
 app.zip
 
-# Local Python environment
+# Python virtual environments
 .venv/
+venv/
+ENV/
 
 # Secret environment variables
 .env
 
-# Bytecode cache
+# Bytecode and cache
 __pycache__/
+*.py[cod]
 
-# IDE settings
+# IDE/editor configs
 .idea/
+.vscode/
 
-# Local SQLite databases
+# Local databases and Flask runtime
 *.db
+instance/
+
+# Resume uploads (explicitly allowed)
+!/uploads/resumes/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Docker
+*.dockerfile
+docker-compose*.yml
+Dockerfile*
+
+# Log files
+*.log
